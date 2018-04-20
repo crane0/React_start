@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>helloReact</title>
+</head>
+<body>
+<div id="d1"></div>
+
+<script src="../js/react.development.js"></script>
+<script src="../js/react-dom.development.js"></script>
+<script src="../js/babel.min.js"></script>
+<script type="text/babel">  //必须声明babel（babel中集成了jsx）
+
+    //创建虚拟的 DOM元素
+    const VDOM = <h1>helloReact</h1>    //不用写''
+
+    //渲染虚拟 DOM元素，到页面真实的 DOM容器中
+    ReactDOM.render(VDOM, document.getElementById('d1'))
+</script>
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div id="ex"></div>
+
+<script src="../js/react.development.js"></script>
+<script src="../js/react-dom.development.js"></script>
+<script src="../js/babel.min.js"></script>
+<script type="text/babel">
+    //3大属性 state，props，refs的值都是普通对象
+
+    /*
+   需求: 自定义组件, 功能说明如下
+     1. 显示 h1标题, 初始文本为: 你喜欢我
+     2. 点击标题更新为: 我喜欢你
+   */
+
+    class LikeMe extends React.Component{
+        //注意，新定义的属性（父类上没有的），都要写在构造器中，否则报错！
+        constructor(){
+            super()
+            //初始化状态
+            this.state = {
+                isLikeMe : false
+            }
+            //第 2种解决方式，硬绑定this的指向。
+            this.handleClick = this.handleClick.bind(this)
+        }
+
+        handleClick(){
+            /*
+            * 注意，此时 this是指向实例对象的，
+            *   但是，在<h1>中的onClick中，是这个函数体！！也就是说单独将这个方法拿出去了。
+            *   则，此时this的指向与调用形式与调用位置有关，（测试指向 undefined）
+            *   所以，就会找不到this上绑定的属性，会报错！
+            *
+            * 2种解决方式：
+            * */
+            const isLikeMe = !this.state.isLikeMe
+            //更新状态（state的值发生变化时，要更新！）,参数为对象的简写形式
+            this.setState({
+                isLikeMe
+            })
+        }
+
+        //第 1种解决方式，箭头函数（this和该方法无关）
+        // handleclick = () => {
+        //     const isLikeMe = !this.state.isLikeMe
+        //     //更新状态（state的值发生变化时，要更新！）
+        //     this.setState = {
+        //         isLikeMe
+        //     }
+        // }
+
+        render(){
+            const content = this.state.isLikeMe ? 'I Love you' : 'You Love me'
+            return <h1 onClick={this.handleClick}>{content}</h1>
+        }
+    }
+
+    ReactDOM.render(<LikeMe />, document.getElementById('ex'))
+</script>
+</body>
+</html>

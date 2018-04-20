@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div id="ex"></div>
+
+<script src="../js/react.development.js"></script>
+<script src="../js/react-dom.development.js"></script>
+<script src="../js/babel.min.js"></script>
+
+<script type="text/babel">
+    /*
+    需求: 自定义组件, 功能说明如下:
+      1. 界面如果页面所示
+      2. 点击按钮, 提示第一个输入框中的值
+      3. 当第2个输入框失去焦点时, 提示这个输入框中的值
+   */
+
+    class Mycomponent extends React.Component{
+
+        hintInput = () => {
+            const content = this.refs.content
+            alert(content.value)
+        }
+
+        /*
+        * 组件内的标签，都可以定义 ref属性，来标识自己
+        * ref的属性值（名称随意），会给组件对象的 refs属性对象中，添加一个属性
+        * 该属性就相当于，当前 DOM元素对象
+        * */
+        //一般有多个标签时，都会嵌套在一个 div中
+        render(){
+            return (
+                <div>
+                    <input type="text" ref="content"/>&nbsp;
+                    <button onClick={this.hintInput}>提示输入</button>&nbsp;
+                    <input type="text" placeholder="失去焦点提示"/>
+                </div>
+            )
+        }
+    }
+    ReactDOM.render(<Mycomponent />, document.getElementById('ex'))
+</script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>创建虚拟DOM元素</title>
+</head>
+<body>
+
+<div id="d1"></div>
+<div id="d2"></div>
+
+<script src="../js/react.development.js"></script>
+<script src="../js/react-dom.development.js"></script>
+<script src="../js/babel.min.js"></script>
+<!--所有的 js都是一个作用域-->
+<script type="text/javascript">
+    //这是React提供的API，使用原生 js,创建虚拟 DOM元素对象
+    const vDOM = React.createElement('h1', {id: 'myId'}, '原生js')
+    ReactDOM.render(vDOM, document.getElementById('d1'))
+</script>
+
+<script type="text/babel">
+    let myId = 'uzi'
+    let content = '使用jsx'
+
+    //使用jsx创建虚拟 DOM元素对象
+    const vDOM2 = <h1 id={myId}>{content}</h1>
+    ReactDOM.render(vDOM2, document.getElementById('d2'))
+</script>
+</body>
+</html>

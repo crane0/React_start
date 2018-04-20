@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>自定义组件2种方式</title>
+</head>
+<body>
+    <div id="ex1"></div>
+    <div id="ex2"></div>
+
+<script src="../js/react.development.js"></script>
+<script src="../js/react-dom.development.js"></script>
+<script src="../js/babel.min.js"></script>
+<script type="text/babel">
+    /*
+    * 注意点：
+    * 1，工厂函数，或组件类，本质都是构造函数（构造函数名，就是对应的名字）
+    *       所以，都必须首字母大写！
+    * 2，虚拟 DOM元素（所有的标签，包括组件标签），必须有闭合标签！
+    * 3，虚拟 DOM元素，只能有一个根元素，但是可以嵌套
+    * */
+
+    //工厂函数组件（简单组件）
+    function Myfirst() {
+        return <h1>工厂模式</h1>
+    }
+    //渲染组件标签
+    ReactDOM.render(<Myfirst />, document.getElementById('ex1'));
+
+
+
+
+    //ES6类组件（复杂组件）
+    class Mysecond extends React.Component{
+        /*
+        * render()是组件类创建出的实例对象调用的。
+        * 因为该实例对象，重写了 render()方法。
+        * this指向实例对象
+        * */
+        render() {
+            console.log(this, this instanceof Mysecond) //true
+            return <h1>ES6类组件模式</h1>
+        }
+    }
+    /*
+    * ReactDOM.render()只是将这个标签的结果，插入到指定的页面元素内部，
+    * 而这个组件标签无法直接渲染的，
+    * 解析这个标签时的过程，
+    *   1)React内部会创建组件实例对象（工厂模式没有这一步）
+    *   2)实例对象调用组件内部的 render() 得到虚拟DOM并解析为真实DOM
+    * */
+    ReactDOM.render(<Mysecond />, document.getElementById('ex2'));
+</script>
+</body>
+</html>

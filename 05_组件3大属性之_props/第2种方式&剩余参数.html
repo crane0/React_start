@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>第2种方式</title>
+</head>
+<body>
+
+<div id="ex1"></div>
+<hr>
+<div id="ex2"></div>
+<hr>
+<div id="ex3"></div>
+
+<script src="../js/react.development.js"></script>
+<script src="../js/react-dom.development.js"></script>
+<!--要使用 propTypes，必须引入这个包！-->
+<script src="../js/prop-types.js"></script>
+<script src="../js/babel.min.js"></script>
+<script type="text/babel">
+    /*
+       需求: 自定义用来显示一个人员信息的组件, 效果如页面. 说明
+        1). 如果性别没有指定, 默认为男
+        2). 如果年龄没有指定, 默认为18
+        3). 姓名必须指定, 且为string
+        4). 年龄(number), 性别(string)可以不指定
+    */
+
+    class Person extends React.Component {
+
+        // 给组件类添加属性: 在属性名前加 static
+
+        //指定传递到组件内的，属性值类型，以及该属性是否必须
+        static propTypes = {
+            //注意 PropTypes中 P是大写
+            name : PropTypes.string.isRequired,
+            age : PropTypes.number,
+            sex : PropTypes.string
+        }
+
+        //指定属性的默认值
+        static defaultProps = {
+            sex : '女',
+            age : 66
+        }
+
+        render () {
+            const {name, age, sex} = this.props
+            return (
+                <ul>
+                    <li>姓名: {name}</li>
+                    <li>年龄: {age}</li>
+                    <li>年龄: {sex}</li>
+                </ul>
+            )
+        }
+    }
+
+    const p1 = {
+        name : 'xlx',
+        age : 34,
+        sex : '男'
+    }
+    //通过在组件标签中，向组件内中，传递参数
+    //也可以使用剩余参数
+    ReactDOM.render(<Person {...p1}/> ,document.getElementById('ex1'))
+
+    const p2 = {
+        name : 'xlx',
+    }
+    ReactDOM.render(<Person name={p2.name} /> ,document.getElementById('ex2'))
+
+    const p3 = {
+        name : 'xlx',
+        age : 18,
+        sex : '男'
+    }
+    ReactDOM.render(<Person name={p3.name} age={p3.age} /> ,document.getElementById('ex3'))
+
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    function Fn() {
+        this.name = 'xlx'
+        this.eat = function () {
+            console.log('hah')
+        }
+        this.hobby = {
+            bb: 123,
+            aa: 456
+        }
+        //this指向实例对象。和 console.log(fn)输出结果相同
+        console.log(this)
+    }
+    var fn = new Fn()
+    console.log(fn)
+    
+</script>
+</body>
+</html>

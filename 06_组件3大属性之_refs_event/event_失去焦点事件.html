@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>失去焦点事件</title>
+</head>
+<body>
+
+<div id="ex"></div>
+
+<script src="../js/react.development.js"></script>
+<script src="../js/react-dom.development.js"></script>
+<script src="../js/babel.min.js"></script>
+
+<script type="text/babel">
+    /*
+    需求: 自定义组件, 功能说明如下:
+      1. 界面如果页面所示
+      2. 点击按钮, 提示第一个输入框中的值
+      3. 当第2个输入框失去焦点时, 提示这个输入框中的值
+   */
+
+    class Mycomponent extends React.Component{
+
+        hintInput = () => {
+            alert(this.contentInput.value)
+        }
+        hintInput2 = (event) => {
+            alert(event.target.value)
+        }
+        /*
+        * 组件内的标签，都可以定义 ref属性，来标识自己
+        *   ref的属性值（名称随意），会给组件对象的 refs属性对象中，添加一个属性
+        *   该属性就相当于，当前 DOM元素对象
+        *
+        *   ref的属性值，可以是一个函数，形参代表组件标签自己，
+        *        以下为例，将input赋值给 this的一个自定义属性，则hintInput（）方法中可以直接调用
+        *
+        * 事件处理
+        *   通过onXxx属性，指定组件标签的事件处理函数
+        *       React使用的是自定义(合成)事件, 而不是使用的原生DOM事件
+        *       React中的事件是通过事件委托方式处理的（委托给组件最外层的元素）
+        *   通过事件函数的 event.target得到发生事件的 DOM元素对象
+        * */
+        //一般有多个标签时，都会嵌套在一个 div中
+        render(){
+            return (
+                <div>
+                    <input type="text" ref={input => this.contentInput = input}/>&nbsp;
+                    <button onClick={this.hintInput}>提示输入</button>&nbsp;
+                    <input type="text" placeholder="失去焦点提示" onBlur={this.hintInput2}/>
+                </div>
+            )
+        }
+    }
+    ReactDOM.render(<Mycomponent />, document.getElementById('ex'))
+</script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>动态展示列表</title>
+</head>
+<body>
+
+<ul id="ex1"></ul>
+
+<script src="../js/react.development.js"></script>
+<script src="../js/react-dom.development.js"></script>
+<script src="../js/babel.min.js"></script>
+<script type="text/babel">
+    /*
+     功能: 动态展示列表数据
+
+      1. 设计数据数组
+      2. 测试出: 要显示一个标签列表, 需要渲染的是一个标签的数组
+      3. 根据数据的数组得到一个标签的数组: arr.map()
+      4. 根据控制台提示: 标签数组中的标签需要有一个唯一的标识: key={index}
+
+      注意：React能自动遍历显示数组中所有的元素
+     */
+
+    //设计的数组
+    const names = ['xlx','syy','sdk','uzi']
+
+    //构建虚拟 DOM，将构建的标签数组插入。
+    let vDOM = (
+        //map返回的是一个新的数组(此处是一个标签数组)
+        names.map((name, index) => {
+            /*
+            * key作为唯一标识，直接设置也可以，
+            * index是数组下标，正好唯一
+            * */
+            return <li key={index}>{name}</li>
+        })
+    )
+
+    //将虚拟DOM，渲染到页面
+    // React能自动遍历显示数组中所有的元素
+    ReactDOM.render(vDOM, document.getElementById('ex1'))
+
+</script>
+</body>
+</html>

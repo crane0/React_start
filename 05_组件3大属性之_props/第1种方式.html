@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>第1种方式</title>
+</head>
+<body>
+
+<div id="ex1"></div>
+<hr>
+<div id="ex2"></div>
+<hr>
+<div id="ex3"></div>
+
+<script src="../js/react.development.js"></script>
+<script src="../js/react-dom.development.js"></script>
+<!--要使用 propTypes，必须引入这个包！-->
+<script src="../js/prop-types.js"></script>
+<script src="../js/babel.min.js"></script>
+<script type="text/babel">
+    /*
+       需求: 自定义用来显示一个人员信息的组件, 效果如页面. 说明
+        1). 如果性别没有指定, 默认为男
+        2). 如果年龄没有指定, 默认为18
+        3). 姓名必须指定, 且为string
+        4). 年龄(number), 性别(string)可以不指定
+    */
+
+    class Person extends React.Component {
+
+        render () {
+            //this.props中就是传递参数的一个普通对象
+            // console.log(this.props)
+            // return (
+            //     <ul>
+            //         <li>姓名: {this.props.name}</li>
+            //         <li>年龄: {this.props.age}</li>
+            //     </ul>
+            // )
+
+            /*
+            * 也可以使用解构赋值
+            * 注意，解构出的就是 3个变量，可以直接使用，
+            *   下面{name}就是直接使用，{}是jsx的语法！
+            * */
+            const {name, age, sex} = this.props
+            return (
+                <ul>
+                    <li>姓名: {name}</li>
+                    <li>年龄: {age}</li>
+                    <li>年龄: {sex}</li>
+                </ul>
+            )
+        }
+    }
+
+    /*
+    * propTypes和defaultProps都是组件类的属性！
+    * 所以，不能直接写到 class中(否则，就是实例对象的)
+    * */
+
+    /*
+    * 指定传递到组件内的，属性值类型，以及该属性是否必须
+    *   当属性值类型不匹配时，页面会正确显示，但控制台会警告
+    *   但当属性是必须的，却没有传递时，页面不会显示，控制台会警告
+    *
+    *   但是，都不会影响其他代码的执行！
+    * */
+    Person.propTypes = {
+        //注意 PropTypes中 P是大写
+        name : PropTypes.string.isRequired,
+        age : PropTypes.number,
+        sex : PropTypes.string
+    }
+
+    //指定属性的默认值
+    Person.defaultProps = {
+        sex : '女',
+        age : 66
+    }
+
+    const p1 = {
+        name : 'xlx',
+        age : 34,
+        sex : '男'
+    }
+    //通过在组件标签中，向组件内中，传递参数
+    ReactDOM.render(<Person name={p1.name} age={p1.age} sex={p1.sex}/> ,document.getElementById('ex1'))
+
+    const p2 = {
+        name : 'xlx',
+    }
+    ReactDOM.render(<Person name={p2.name} /> ,document.getElementById('ex2'))
+
+    const p3 = {
+        name : 'xlx',
+        age : 18,
+        sex : '男'
+    }
+    ReactDOM.render(<Person name={p3.name} age={p3.age} /> ,document.getElementById('ex3'))
+
+
+
+</script>
+</body>
+</html>
