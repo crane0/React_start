@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div id="ex"></div>
+
+<script src="../js/react.development.js"></script>
+<script src="../js/react-dom.development.js"></script>
+<script src="../js/babel.min.js"></script>
+
+<script type="text/babel">
+    /*
+    需求: 自定义包含表单的组件
+      1. 界面如下所示
+      2. 输入用户名密码后, 点击登陆提示输入信息
+      3. 不提交表单
+    */
+    class Form extends React.Component{
+
+        //注意是箭头函数！
+        handleSubmit = (event) => {
+            //阻止默认提交的行为
+            event.preventDefault()
+            const inputName = this.inputName.value
+            const inputPwd = this.inputPwd.value
+            alert('输入的用户名：'+inputName+'，密码：'+inputPwd)
+        }
+
+        render() {
+            /*
+            * 下面只是简单的onClick，不是onSubmit
+            * 否则，就算阻止默认行为，也是会提交的
+            * */
+
+            return (
+                <form>
+                    用户名：<input type="text" ref={input => this.inputName = input}/><br />
+                    密码：<input type="password" ref={input => this.inputPwd = input}/><br />
+                    <input type="submit" value="提交" onClick={this.handleSubmit}/>
+                </form>
+            )
+        }
+    }
+    ReactDOM.render(<Form />, document.getElementById('ex'))
+</script>
+
+</body>
+</html>

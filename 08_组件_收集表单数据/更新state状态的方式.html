@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>更新state状态的方式</title>
+</head>
+<body>
+
+<div id="ex"></div>
+
+<script src="../js/react.development.js"></script>
+<script src="../js/react-dom.development.js"></script>
+<script src="../js/babel.min.js"></script>
+
+<script type="text/babel">
+    /*
+    需求: 自定义包含表单的组件
+      1. 界面如下所示
+      2. 输入用户名密码后, 点击登陆提示输入信息
+      3. 不提交表单
+    */
+    class Form extends React.Component{
+
+        state = {
+            name: '',
+            pwd: ''
+        }
+
+        //注意是箭头函数！
+        handleSubmit = (event) => {
+            //阻止默认提交的行为
+            event.preventDefault()
+            const {name, pwd} = this.state
+            alert('输入的用户名：'+name+'，密码：'+pwd)
+        }
+
+        handleInputName = (event) => {
+            /*
+            * 对象的简写形式，必须要和state中的属性名对应，
+            * 如下所示，这样时无法更新state中的name的，
+            *   并且因为 input的value，使用的就是这个 name,而state的初始值是''
+            *   所以，在页面中的input就无法输入，因为 name状态没有改变！
+            * */
+            // const name1 = event.target.value
+            // this.setState({
+            //     name1
+            // })
+
+            const name = event.target.value
+            this.setState({
+                name
+            })
+        }
+
+        handleInputPwd = (event) => {
+
+            const pwd = event.target.value
+            this.setState({
+                pwd
+            })
+        }
+
+        render() {
+            /*
+            * 下面只是简单的onClick，不是onSubmit
+            * 否则，就算阻止默认行为，也是会提交的
+            * */
+            const {name, pwd} = this.state
+
+            return (
+                <form>
+                    用户名：<input type="text" value={name} onChange={this.handleInputName}/><br />
+                    密码：<input type="password" value={pwd} onChange={this.handleInputPwd}/><br />
+                    <input type="submit" value="提交" onClick={this.handleSubmit}/>
+                </form>
+            )
+        }
+    }
+    ReactDOM.render(<Form />, document.getElementById('ex'))
+</script>
+
+</body>
+</html>

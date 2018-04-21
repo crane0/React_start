@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>生命周期</title>
+</head>
+<body>
+
+<div id="ex"></div>
+
+<script src="../js/react.development.js"></script>
+<script src="../js/react-dom.development.js"></script>
+<script src="../js/babel.min.js"></script>
+
+<script type="text/babel">
+    class Animation extends React.Component{
+
+        state = {
+            opacity : 1
+        }
+
+        click = () => {
+
+        }
+
+        render() {
+            /*
+            * 里面的 {}表示这是一个键值对对象，因为样式就是以键值对的形式设置的
+            * 外面的 {}是jsx的语法，将一个变量放在标签内
+            * */
+            return (
+                <div>
+                    <h2 style={{opacity: this.state.opacity}}>我会慢慢消失</h2>
+                    <button onClick={this.click}>点我</button>
+                </div>
+            )
+        }
+    }
+    ReactDOM.render(<Animation />, document.getElementById('ex'))
+</script>
+</body>
+</html>
