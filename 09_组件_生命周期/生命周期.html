@@ -19,24 +19,84 @@
             opacity : 1
         }
 
-        click = () => {
+        constructor(){
+            super()
+            console.log(1,'constructor','组件将要创建')
+        }
+
+        /*
+        * 下面这些都是React内部的方法，所以不用考虑this指向而使用箭头函数
+        * */
+        componentWillMount() {
+            console.log(2,'componentWillMount','组件将要挂载显示')
+        }
+
+
+        //组件挂在完毕
+        componentDidMount() {
+            console.log(4,'componentDidMount','组件已经挂载')
+            let opacity = this.state.opacity
+            this.intervalId = setInterval(() => {
+                console.log('---')
+                opacity -= 0.2
+                //这里不能等于 0，因为每次都是-0.2，会将 0跳过去！
+                if(opacity <= 0){
+                    opacity = 1
+                }
+
+                this.setState({
+                    opacity
+                })
+            },200)
+            //setInterval是异步的，当 opacity还没有改变时，就执行下面的更新了，所以要放在定时器里面。
+            // this.setState({
+            //     opacity
+            // })
 
         }
 
+        /*
+        * 组件将要卸载（死亡）之前，进行定时器的清理
+        * 因为定时器中，还有对组件进行的操作，如果不在这里清除清除器，
+        *   而是在组件卸载之后，就会引发错误。
+        * */
+        componentWillUnmount() {
+            console.log(7,'componentWillUnmount()', '组件将要死亡')
+            // 清除定时器
+            clearInterval(this.intervalId)
+        }
+
+        componentWillUpdate() {
+            console.log(5,'componentWillUnmount()', '组件将要更新')
+        }
+
+        componentDidUpdate () {
+            console.log(6,'componentDidUpdate()', '组件已经更新了')
+        }
+
+        click = () => {
+            //卸载（移出）指定容器中的组件
+            ReactDOM.unmountComponentAtNode(document.getElementById('ex'))
+        }
+
         render() {
+            console.log(3,'这是render方法')
             /*
             * 里面的 {}表示这是一个键值对对象，因为样式就是以键值对的形式设置的
             * 外面的 {}是jsx的语法，将一个变量放在标签内
             * */
             return (
                 <div>
-                    <h2 style={{opacity: this.state.opacity}}>我会慢慢消失</h2>
+                    <h2 style={{opacity: this.state.opacity}}>{this.props.text}</h2>
                     <button onClick={this.click}>点我</button>
                 </div>
             )
         }
     }
-    ReactDOM.render(<Animation />, document.getElementById('ex'))
+
+    const text = '我会慢慢消失...'
+
+    ReactDOM.render(<Animation text={text}/>, document.getElementById('ex'))
 </script>
 </body>
 </html>
