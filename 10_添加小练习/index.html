@@ -20,16 +20,18 @@
         }
 
         //+是因为获取的是string类型，要参数计算，所以变为number类型
+		//直接添加
         add = () => {
             const selected = +this.refs.optionValue.value
             let num = this.state.num
             num += selected
             console.log(num)
             this.setState({
-                num
+                num4
             })
         }
 
+		//直接删除
         remove = () => {
             const selected = +this.refs.optionValue.value
             let num = this.state.num
@@ -39,6 +41,7 @@
             })
         }
 
+		//奇数时添加
         oddAdd = () => {
             const selected = +this.refs.optionValue.value
             let num = this.state.num
@@ -50,6 +53,7 @@
             })
         }
 
+		//异步时（1s）添加
         asyncAdd = () => {
             const selected = +this.refs.optionValue.value
             let num = this.state.num
@@ -61,10 +65,11 @@
             },1000)
 
         }
-
-        componentDidUpdate() {
-            clearTimeout(this.intervalId)
-        }
+		
+		//组件更新时，清除定时器
+        //componentDidUpdate() {
+            //clearTimeout(this.intervalId)
+        //}
 
         render() {
             return (
