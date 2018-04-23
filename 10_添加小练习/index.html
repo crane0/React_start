@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>添加小练习</title>
+</head>
+<body>
+
+<div id="ex"></div>
+
+<script src="../js/react.development.js"></script>
+<script src="../js/react-dom.development.js"></script>
+<script src="../js/babel.min.js"></script>
+
+<script type="text/babel">
+    class App extends React.Component {
+
+        state = {
+            num : 0
+        }
+
+        //+是因为获取的是string类型，要参数计算，所以变为number类型
+        add = () => {
+            const selected = +this.refs.optionValue.value
+            let num = this.state.num
+            num += selected
+            console.log(num)
+            this.setState({
+                num
+            })
+        }
+
+        remove = () => {
+            const selected = +this.refs.optionValue.value
+            let num = this.state.num
+            num -= selected
+            this.setState({
+                num
+            })
+        }
+
+        oddAdd = () => {
+            const selected = +this.refs.optionValue.value
+            let num = this.state.num
+            if(num%2 !== 0){
+                num += selected
+            }
+            this.setState({
+                num
+            })
+        }
+
+        asyncAdd = () => {
+            const selected = +this.refs.optionValue.value
+            let num = this.state.num
+            this.intervalId = setTimeout(() => {
+                num += selected
+                this.setState({
+                    num
+                })
+            },1000)
+
+        }
+
+        componentDidUpdate() {
+            clearTimeout(this.intervalId)
+        }
+
+        render() {
+            return (
+                <div>
+                    <p>click {this.state.num} times</p>
+                    <select ref="optionValue">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                    </select>
+                    <input type="button" value="+" onClick={this.add}/>
+                    <input type="button" value="-" onClick={this.remove}/>
+                    <input type="button" value="奇数时添加" onClick={this.oddAdd}/>
+                    <input type="button" value="异步（1s）添加" onClick={this.asyncAdd}/>
+                </div>
+            )
+        }
+    }
+
+    ReactDOM.render(<App />, document.getElementById('ex'))
+</script>
+</body>
+</html>
