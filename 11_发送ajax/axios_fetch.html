@@ -47,8 +47,11 @@
 
             fetch(url)
                 .then(response => {
-                    //为什么添加了这条语句，就会报错
-                    // console.log(response.json())
+                    /*
+                    * 为什么添加了这条语句，就会报错？
+                    * 因为 response.json() 只能读一次！
+                    * */
+                    console.log(response.json())
                     //return出去的，也是一个Promise对象
                     return response.json()
                 })

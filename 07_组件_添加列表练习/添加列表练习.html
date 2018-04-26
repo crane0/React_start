@@ -43,8 +43,9 @@
         addToDo = (todo) => {
             /*
             * 为什么不能这样直接调用？
-            * 因为函数的调用，从离得最近的开始，会先找 todos.unshift(todo)
-            *   而 todos还没有定义
+            * 因为这样没有声明 todos这个变量！
+            * 所以在更新时，使用对象的简写形式，找不到就会报错！
+            *
             * */
             // this.state.todos.unshift(todo)
             console.log(this.state.todos) //还是数组
